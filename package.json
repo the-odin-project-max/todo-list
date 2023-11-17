@@ -1,0 +1,35 @@
+{
+  "name": "todo-list",
+  "version": "0.0.1",
+  "description": "A The Odin Project's project to practice OOP Principles and Webpack\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"build": "npm run build:development",
+	"build:production": "webpack --mode production",
+	"build:development": "webpack --mode development",
+	"start:development": "webpack serve --mode development --open",
+	"deploy:gh-pages": "git subtree push --prefix dist origin gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-odin-project-max/todo-list.git"
+  },
+  "keywords": [
+    "Webpack",
+    "OOP"
+  ],
+  "author": "Max Teiger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/the-odin-project-max/todo-list/issues"
+  },
+  "homepage": "https://github.com/the-odin-project-max/todo-list#readme",
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
