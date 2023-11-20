@@ -1,78 +1,29 @@
-
-class TodoItem {
-  constructor(description, dueDate) {
-    this.description = description;
-    this.dueDate = dueDate;
-    this.completed = false;
-  }
-
-  markAsCompleted() {
-    this.completed = true;
-  }
-
-  markAsIncomplete() {
-    this.completed = false;
-  }
-
-  getFormattedDescription() {
-	return this.completed ? `[x] ${this.description}` : `[ ] ${this.description}`;
-  }
-
-  getFormattedDueDate() {
-	return this.dueDate;
-  }
-
-  display() {
-	console.log(
-	  `${this.getFormattedDescription()} (${this.getFormattedDueDate()})`
-	);
-  }
-}
-
-class TodoList {
-  constructor() {
-    this.items = [];
-  }
-
-  addItem(description, dueDate) {
-    const newItem = new TodoItem(description, dueDate);
-    this.items.push(newItem);
-  }
-
-  removeItem(index) {
-    this.items.splice(index, 1);
-  }
-
-  markItemAsCompleted(index) {
-    this.items[index].markAsCompleted();
-  }
-
-  markItemAsIncomplete(index) {
-    this.items[index].markAsIncomplete();
-  }
-
-  displayItems() {
-	this.items.forEach((item) => {
-	  item.display();
-	});
-  }
-}
+import TodoList from "./todoClasses/todoList.js";
 
 // Usage example:
 const myTodoList = new TodoList();
 
-console.log("******** My Todo List *********");
-myTodoList.displayItems();
+myTodoList.display();
 
-myTodoList.addItem("Buy groceries", "2022-12-31");
-myTodoList.addItem("Finish coding project", "2022-12-15");
-myTodoList.addItem("Clean apartment", "2022-12-01");
+myTodoList.addProject("My First Project");
+myTodoList.addProject("My Second Project");
 
-console.log("******** My Todo List *********");
-myTodoList.displayItems();
+myTodoList.display();
 
-myTodoList.markItemAsCompleted(0);
-myTodoList.removeItem(1);
+const myFirstProject = myTodoList.getProject(0);
+const mySecondProject = myTodoList.getProject(1);
 
-console.log("******** My Todo List *********");
-myTodoList.displayItems();
+myFirstProject.addItem("Buy groceries", "2022-12-31");
+myFirstProject.addItem("Finish coding project", "2022-12-15");
+myFirstProject.addItem("Clean apartment", "2022-12-01");
+
+mySecondProject.addItem("Buy Christmas presents", "2022-12-24");
+mySecondProject.addItem("Buy birthday present", "2022-12-10");
+mySecondProject.addItem("Buy anniversary present", "2022-12-01");
+
+myTodoList.display();
+
+myFirstProject.markItemAsCompleted(0);
+myFirstProject.removeItem(1);
+
+myTodoList.display();
