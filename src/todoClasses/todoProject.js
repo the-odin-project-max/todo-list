@@ -7,6 +7,10 @@ class TodoProject {
 		this.name = name;
 	}
 
+	getName() {
+		return this.name;
+	}
+
 	addItem(description, dueDate) {
 		const newItem = new TodoItem(description, dueDate);
 		this.items.push(newItem);
