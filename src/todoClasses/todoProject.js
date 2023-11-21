@@ -11,8 +11,8 @@ class TodoProject {
 		return this.name;
 	}
 
-	addItem(description, dueDate) {
-		const newItem = new TodoItem(description, dueDate);
+	addItem(description, dueDate, priority = 0, notes = "") {
+		const newItem = new TodoItem(description, dueDate, priority, notes);
 		this.items.push(newItem);
 	}
 
@@ -26,6 +26,10 @@ class TodoProject {
 
 	markItemAsIncomplete(index) {
 		this.items[index].markAsIncomplete();
+	}
+
+	toggleItemCompleted(index) {
+		this.items[index].toggleCompleted();
 	}
 
 	display() {

@@ -8,6 +8,55 @@ export default class DOMInteractions {
 		this.todoListContainer = document.getElementById('todo-list-container');
 	}
 
+	createDialogToAddNewItems(projectIndex) {
+		const dialog = document.createElement('dialog');
+		dialog.id = 'todo-item-dialog';
+
+		dialog.innerHTML = `
+		<h2>Add New Task</h2>
+		<button class="close-dialog-btn" autofocus>X</button>
+		<form id="todo-item-form">
+			<input type="text" placeholder="Enter task description" id="task-description">
+			<input type="date" id="due-date">
+			<select id="priority">
+				<option value="0">Low</option>
+				<option value="1">Medium</option>
+				<option value="2">High</option>
+			</select>
+			<textarea placeholder="Enter notes" id="notes"></textarea>
+			<button type="submit">Add Task</button>
+		</form>
+		`;
+
+		this.formContainer.appendChild(dialog);
+
+		const submitButton = dialog.querySelector('dialog#todo-item-dialog button[type="submit"]');
+		submitButton.addEventListener('click', (e) => {
+			e.preventDefault();
+			const taskDescription = document.getElementById('task-description').value;
+			const dueDate = document.getElementById('due-date').value;
+			const priority = document.getElementById('priority').value;
+			const notes = document.getElementById('notes').value;
+
+			console.log(taskDescription, dueDate, priority, notes)
+			console.log(this.todoList.getProject(projectIndex));
+			
+			this.todoList.getProject(projectIndex).addItem(taskDescription, dueDate, priority, notes);
+
+			this.renderProjectsList();
+			dialog.close();
+			this.formContainer.removeChild(dialog);
+		});
+
+		const closeButton = dialog.querySelector('dialog#todo-item-dialog > button.close-dialog-btn');
+		closeButton.addEventListener('click', (e) => {
+			dialog.close();
+		});
+
+
+		dialog.showModal();
+	}
+
 	createFormToAddNewProjects() {
 		const form = document.createElement('form');
 		form.id = 'todo-form';
@@ -50,6 +99,7 @@ export default class DOMInteractions {
 				return `
 				<li class="todo-item">
 				${item.getFormattedDescription()}
+				<button class="todo-item-complete-btn" data-itemindex="${itemIndex}" data-projectindex="${projectIndex}">${item.getCompleted() ? "Uncomplete" : "Complete"}</button>
 				<button class="todo-item-delete-btn" data-itemindex="${itemIndex}" data-projectindex="${projectIndex}">Delete</button>
 				</li>
 				`;
@@ -81,7 +131,8 @@ export default class DOMInteractions {
 
 		document.querySelectorAll('.project-add-task-btn').forEach(item => {
 			item.addEventListener('click', event => {
-				this.todoList.getProject(item.dataset["projectindex"]).addItem('New Task', '2022-12-31');
+				// this.todoList.getProject(item.dataset["projectindex"]).addItem('New Task', '2022-12-31');
+				this.createDialogToAddNewItems(item.dataset["projectindex"]);
 				this.renderProjectsList();
 			})
 		});
@@ -89,6 +140,13 @@ export default class DOMInteractions {
 		document.querySelectorAll('.todo-item-delete-btn').forEach(item => {
 			item.addEventListener('click', event => {
 				this.todoList.getProject(item.dataset["projectindex"]).removeItem(item.dataset["itemindex"]);
+				this.renderProjectsList();
+			})
+		});
+
+		document.querySelectorAll('.todo-item-complete-btn').forEach(item => {
+			item.addEventListener('click', event => {
+				this.todoList.getProject(item.dataset["projectindex"]).toggleItemCompleted(item.dataset["itemindex"]);
 				this.renderProjectsList();
 			})
 		});

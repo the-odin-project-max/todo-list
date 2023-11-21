@@ -15,6 +15,14 @@ class TodoItem {
 		this.completed = false;
 	}
 
+	toggleCompleted() {
+		this.completed = !this.completed;
+	}
+
+	getCompleted() {
+		return this.completed;
+	}
+
 	getNotes() {
 		return this.notes;
 	}
