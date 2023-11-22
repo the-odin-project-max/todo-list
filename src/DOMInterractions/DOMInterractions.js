@@ -108,7 +108,8 @@ export default class DOMInteractions {
 	`;
 			this.todoListContainer.appendChild(projectDiv);
 		});
-
+		
+		this.todoList.save();
 		this.toggleButtons();
 	}
 
