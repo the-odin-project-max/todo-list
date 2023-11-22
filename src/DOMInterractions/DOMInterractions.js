@@ -22,6 +22,7 @@ export default class DOMInteractions {
 				<option value="0">Low</option>
 				<option value="1">Medium</option>
 				<option value="2">High</option>
+				<option value="undefined">None</option>
 			</select>
 			<textarea placeholder="Enter notes" id="notes"></textarea>
 			<button type="submit">Add Task</button>
@@ -38,12 +39,10 @@ export default class DOMInteractions {
 			const priority = document.getElementById('priority').value;
 			const notes = document.getElementById('notes').value;
 
-			console.log(taskDescription, dueDate, priority, notes)
-			console.log(this.todoList.getProject(projectIndex));
-			
 			this.todoList.getProject(projectIndex).addItem(taskDescription, dueDate, priority, notes);
 
 			this.renderProjectsList();
+
 			dialog.close();
 			this.formContainer.removeChild(dialog);
 		});
@@ -51,6 +50,7 @@ export default class DOMInteractions {
 		const closeButton = dialog.querySelector('dialog#todo-item-dialog > button.close-dialog-btn');
 		closeButton.addEventListener('click', (e) => {
 			dialog.close();
+			this.formContainer.removeChild(dialog);
 		});
 
 
@@ -98,7 +98,7 @@ export default class DOMInteractions {
 			${project.items.map((item, itemIndex) => {
 				return `
 				<li class="todo-item">
-				${item.getFormattedDescription()}
+				${item.toString()}
 				<button class="todo-item-complete-btn" data-itemindex="${itemIndex}" data-projectindex="${projectIndex}">${item.getCompleted() ? "Uncomplete" : "Complete"}</button>
 				<button class="todo-item-delete-btn" data-itemindex="${itemIndex}" data-projectindex="${projectIndex}">Delete</button>
 				</li>

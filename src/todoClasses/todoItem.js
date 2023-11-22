@@ -1,5 +1,6 @@
 class TodoItem {
-	constructor(description, dueDate, priority = 0, notes) {
+	constructor(description, dueDate, priority, notes) {
+		dueDate = dueDate || new Date().toISOString().slice(0, 10);
 		this.description = description;
 		this.dueDate = dueDate;
 		this.completed = false;
@@ -40,13 +41,17 @@ class TodoItem {
 	}
 
 	getPriorityString() {
-		let priorityString = this.priority === 0 ? "Low" : this.priority === 1 ? "Medium" : "High";
+		let priorityString = this.priority === "0" ? "Low" : this.priority === "1" ? "Medium" : this.priority === "2" ? "High" : undefined;
 		return priorityString;
+	}
+
+	toString() {
+		return `${this.getPriorityString()} ${this.getFormattedDescription()} (${this.getFormattedDueDate()})`;
 	}
 
 	display() {
 		console.log(
-			`${this.getPriorityString()} ${this.getFormattedDescription()} (${this.getFormattedDueDate()})`
+			this.toString()
 		);
 	}
 }
