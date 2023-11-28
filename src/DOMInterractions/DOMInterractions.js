@@ -151,5 +151,6 @@ export default class DOMInteractions {
 				this.renderProjectsList();
 			})
 		});
+
 	}
 }
